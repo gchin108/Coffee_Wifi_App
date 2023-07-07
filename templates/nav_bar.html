@@ -1,0 +1,31 @@
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{{url_for('home')}}">Coffee&Wifi</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li><a href="{{url_for('home')}}">Home</a></li>
+				{% if current_user.is_authenticated %}
+				<li><a href="{{url_for('add_cafe')}}">Add Cafe</a></li>
+				<li><a href="{{url_for('cafes')}}">All Cafes</a></li>
+				{% else%}
+				<li><a href="{{url_for('cafes')}}">All Cafes</a></li>
+				{% endif%}
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				{% if current_user.is_authenticated %}
+				<li><a href="{{url_for('logout')}}"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				{% else%}
+				<li><a href="{{url_for('register')}}"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+				<li><a href="{{url_for('login')}}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+				{% endif%}
+			</ul>
+		</div>
+	</div>
+</nav>

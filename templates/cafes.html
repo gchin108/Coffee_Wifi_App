@@ -1,0 +1,64 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Cafe{% endblock %}
+
+{% block styles %}
+{{super ()}}
+<link href="static/css/styles.css" rel="stylesheet">
+{%endblock%}
+
+
+{% block content %}
+{% include "nav_bar.html" %}
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>All Cafes</h1>
+			{% if not current_user.is_authenticated %}
+			<p>Please <a href="{{url_for('login')}}">login</a> to add or edit cafes</p>
+			{% endif %}
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+
+			{% endif %}
+			{% endwith %}
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Cafe Name</th>
+					<th>Location</th>
+					<th>Open</th>
+					<th>Close</th>
+					<th>Coffee</th>
+					<th>Wifi</th>
+					<th>Power</th>
+				</tr>
+				</thead>
+				{%for cafe in cafes%}
+				<tr>
+					<td>{{cafe.name}}</td>
+					<td><a href="{{cafe.map_url}}">{{cafe.street_intersection}}</a></td>
+					<td>{{cafe.open}}</td>
+					<td>{{cafe.close}}</td>
+					<td>{{cafe.coffee_rating}}</td>
+					<td>{{cafe.wifi_rating}}</td>
+					<td>{{cafe.power_rating}}</td>
+					{% if current_user.is_authenticated %}
+					<td><a href="{{url_for('edit_entry', entry_id=cafe.id) }}">Edit</a></td>
+					{%endif%}
+					{% if current_user.id==1 %}
+					<td><a href="{{url_for('delete_entry', entry_id=cafe.id) }}">✘</a></td>
+					{%endif%}
+				</tr>
+				{%endfor%}
+			</table>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
