@@ -60,7 +60,10 @@ class Cafe(db.Model):
 
 
 with app.app_context():
-    db.create_all()
+    # db.create_all()
+    all_users = User.query.all()
+    for user in all_users:
+        print(f'[ID:{user.id}, Name:{user.name}, Email: {user.email}]')
 
 
 def admin_only(func):
